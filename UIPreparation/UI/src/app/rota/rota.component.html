@@ -1,0 +1,307 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">{{'RotaList'| translate}}</h4>
+            <a *ngIf="checkClaim('CreateRotaCommand')" class="pull-right" data-toggle="modal" data-target="#rota"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+							<table mat-table [dataSource]="dataSource" matSort>
+
+
+								
+                   <ng-container matColumnDef="rotaId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'RotaId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.rotaId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="baslik">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Baslik'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.baslik}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="ozet">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Ozet'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.ozet}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="aciklama">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Aciklama'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.aciklama}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="yayin">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Yayin'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.yayin}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="sira">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Sira'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.sira}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="foto">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Foto'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.foto}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="kategoriId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'KategoriId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.kategoriId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="sehirId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'SehirId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.sehirId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="anaRotaId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'AnaRotaId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.anaRotaId}}</td>
+				   </ng-container>
+
+
+           <ng-container matColumnDef="search">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td style="width: 25px;" mat-cell *matCellDef="let element">
+              <a *ngIf="checkClaim('UpdateRotaCommand')" (click)="navigateToRotaPages(element.rotaId)">
+                <i title="{{ 'Search' | translate }}" style="color:#ff5722;" class="fas fa-search"></i>
+              </a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="file" >
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td style="width: 25px;" mat-cell
+              *matCellDef="let element">
+              <a *ngIf="checkClaim('UpdateRotaCommand')" data-toggle="modal" data-target="#photoModal"  (click)="upFile(element.rotaId)">
+                <i title="{{'File'| translate}}" style="color:#ff5722;" class="far fa-documents"></i>
+              </a>
+            </td>
+          </ng-container>
+
+								<ng-container matColumnDef="update" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('UpdateRotaCommand')" data-toggle="modal" data-target="#rota"  (click)="getRotaById(element.rotaId)">
+                      <i title="{{'Update'| translate}}" style="color:#ff5722;" class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td  style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('DeleteRotaCommand')" (confirm)="deleteRota(element.rotaId)" [swal]="deleteSwal"><i title="{{'Delete'| translate}}" style="color: #D9534E;"class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow style="text-align: center;">
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
+                </tr>
+							</table>
+							<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+							</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-angular fade" id="rota" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(rotaAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'RotaForm'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="rotaAddForm" [formGroup]="rotaAddForm" (ngSubmit)="save()">
+          
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="baslik" type="text" id="baslik" name="baslik"
+                       formControlName="baslik" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('baslik')!.hasError('baslik') && rotaAddForm.get('baslik')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="ozet" type="text" id="ozet" name="ozet"
+                       formControlName="ozet" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('ozet')!.hasError('ozet') && rotaAddForm.get('ozet')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="aciklama" type="text" id="aciklama" name="aciklama"
+                       formControlName="aciklama" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('aciklama')!.hasError('aciklama') && rotaAddForm.get('aciklama')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="yayin" type="text" id="yayin" name="yayin"
+                       formControlName="yayin" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('yayin')!.hasError('yayin') && rotaAddForm.get('yayin')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="sira" type="text" id="sira" name="sira"
+                       formControlName="sira" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('sira')!.hasError('sira') && rotaAddForm.get('sira')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="foto" type="text" id="foto" name="foto"
+                       formControlName="foto" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaAddForm.get('foto')!.hasError('foto') && rotaAddForm.get('foto')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<!-- <div class="row">
+						<div class="col-md-12">
+							<select class="browser-default custom-select" formControlName="kategoriId">
+								<option *ngFor="let item of rotalookUp" [value]="item.id"> {{item.label}}</option>
+							</select>
+						</div>
+					</div> -->
+        
+              
+            <select class="browser-default custom-select" formControlName="kategoriId">
+              <option value="">Seçiniz</option>
+              <option *ngFor="let item of kategoriList" [value]="item.kategoriId"> {{item.baslik}}</option>
+            </select>
+      
+					<!-- <div class="row">
+						<div class="col-md-12">
+							<select class="browser-default custom-select" formControlName="sehirId">
+								<option *ngFor="let item of rotalookUp" [value]="item.id"> {{item.label}}</option>
+							</select>
+						</div>
+					</div> -->
+     
+              
+            <select class="browser-default custom-select" formControlName="sehirId">
+              <option value="">Seçiniz</option>
+              <option *ngFor="let item of sehirList" [value]="item.sehirId"> {{item.baslik}}</option>
+            </select>
+     
+					<div class="row">
+						<div class="col-md-12">
+							<select class="browser-default custom-select" formControlName="anaRotaId">
+								<option value="">Seçiniz </option>
+								<option value="0">0 </option>
+								<option value="1">1 </option>
+							</select>
+						</div>
+					</div>
+          <!-- <mat-form-field class="example-full-width">
+            <input matInput placeholder="anaRotaId" type="text" id="anaRotaId" name="anaRotaId"
+                   formControlName="anaRotaId" />
+             <div class="alert alert-danger"
+                 *ngIf="rotaAddForm.get('anaRotaId')!.hasError('anaRotaId') && rotaAddForm.get('anaRotaId')!.dirty">
+            </div> 
+          </mat-form-field> -->
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(photoForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'BlogForm'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="photoForm" [formGroup]="photoForm" (ngSubmit)="addPhotoSave()">
+          
+				
+					<div class="row">
+            <div class="col col-md-12">
+             
+                <input  placeholder="id" type="hidden" id="id" name="id"
+                       formControlName="id" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('id')!.hasError('id') && photoForm.get('id')!.dirty">
+                </div>
+             
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              
+                <input style="float: left;" placeholder="file" type="file" id="file" name="file"  (change)="uploadFile($event)"
+                       formControlName="file" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('file')!.hasError('file') && photoForm.get('file')!.dirty">
+                </div>
+              
+            </div>
+          </div>
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon = "error" [showCancelButton]="true"
+	[confirmButtonText] = "'OK'"[cancelButtonText] = "'Cancel'" >
+</swal>
+

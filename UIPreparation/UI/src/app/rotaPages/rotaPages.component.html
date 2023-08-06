@@ -1,0 +1,438 @@
+<div class="card" style="width: calc(100% - 60px); margin: 0 auto;">
+  <h2 style="margin-left: 20px; margin-top: 10px; margin-bottom: 0px;" class="card-title">{{ rota.baslik }}</h2>
+  <div class="card-body" style="display: flex; align-items: center;">
+    <img style="height: 270px; width: 270px; margin-right: 10px;" src="{{baseUrl}}{{ rota.foto }}">
+    <p class="card-text">{{ rota.aciklama }}</p>
+  </div>
+</div>
+
+
+<div class="" style="width: calc(100% - 25px); margin: 0 auto;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">{{'RotaDetayiList'| translate}}</h4>
+            <a *ngIf="checkClaim('CreateRotaDetayiCommand')" class="pull-right" data-toggle="modal" data-target="#rotadetayi"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+							<table mat-table [dataSource]="dataSource" matSort>
+
+
+								
+                   <ng-container matColumnDef="rotaDetayiId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'RotaDetayiId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.rotaDetayiId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="rotaId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'RotaId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.rotaId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="baslik">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Baslik'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.baslik}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="ozet">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Ozet'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.ozet}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="aciklama">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Aciklama'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.aciklama}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="yayin">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Yayin'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.yayin}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="sira">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Sira'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.sira}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="foto">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Foto'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.foto}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="kategoriId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'KategoriId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.kategoriId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="sehirId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'SehirId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.sehirId}}</td>
+				   </ng-container>
+
+           <ng-container matColumnDef="file" >
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td style="width: 25px;" mat-cell
+              *matCellDef="let element">
+              <a *ngIf="checkClaim('UpdateRotaDetayiCommand')" data-toggle="modal" data-target="#photoModal"  (click)="upFile(element.rotaDetayiId)">
+                <i title="{{'File'| translate}}" style="color:#ff5722;" class="far fa-documents"></i>
+              </a>
+            </td>
+          </ng-container>
+								<ng-container matColumnDef="update" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('UpdateRotaDetayiCommand')" data-toggle="modal" data-target="#rotadetayi"  (click)="getRotaDetayiById(element.rotaDetayiId)">
+                      <i title="{{'Update'| translate}}" style="color:#ff5722;" class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="delete" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td  style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('DeleteRotaDetayiCommand')" (confirm)="deleteRotaDetayi(element.rotaDetayiId)" [swal]="deleteSwal"><i title="{{'Delete'| translate}}" style="color: #D9534E;"class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow style="text-align: center;">
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
+                </tr>
+							</table>
+							<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+							</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-angular fade" id="rotadetayi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(rotaDetayiAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'RotaDetayiForm'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="rotaDetayiAddForm" [formGroup]="rotaDetayiAddForm" (ngSubmit)="save()">     
+            <input type="hidden" formControlName="rotaId">
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="baslik" type="text" id="baslik" name="baslik"
+                       formControlName="baslik" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaDetayiAddForm.get('baslik')!.hasError('baslik') && rotaDetayiAddForm.get('baslik')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="ozet" type="text" id="ozet" name="ozet"
+                       formControlName="ozet" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaDetayiAddForm.get('ozet')!.hasError('ozet') && rotaDetayiAddForm.get('ozet')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col col-md-12">
+              <angular-editor formControlName="aciklama" [placeholder]="'Enter text...'"></angular-editor>
+              <div class="alert alert-danger"
+                   *ngIf="rotaDetayiAddForm.get('aciklama')!.hasError('aciklama') && rotaDetayiAddForm.get('aciklama')!.dirty">
+              </div>
+            </div>
+          </div>
+          
+          
+          
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="yayin" type="text" id="yayin" name="yayin"
+                       formControlName="yayin" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaDetayiAddForm.get('yayin')!.hasError('yayin') && rotaDetayiAddForm.get('yayin')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="sira" type="text" id="sira" name="sira"
+                       formControlName="sira" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaDetayiAddForm.get('sira')!.hasError('sira') && rotaDetayiAddForm.get('sira')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="foto" type="text" id="foto" name="foto"
+                       formControlName="foto" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaDetayiAddForm.get('foto')!.hasError('foto') && rotaDetayiAddForm.get('foto')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>    
+            <select class="browser-default custom-select" formControlName="kategoriId">
+              <option value="">Seçiniz</option>
+              <option *ngFor="let item of kategoriList" [value]="item.kategoriId"> {{item.baslik}}</option>
+            </select>            
+            <select class="browser-default custom-select" formControlName="sehirId">
+              <option value="">Seçiniz</option>
+              <option *ngFor="let item of sehirList" [value]="item.sehirId"> {{item.baslik}}</option>
+            </select>                
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<angular-editor [placeholder]="'Enter text...'" [(ngModel)]="editorContent"></angular-editor>
+
+
+<!-- FOTOĞRAF MODAL -->
+
+<div class="modal modal-angular fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(photoForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'Rota Detayi Fotoğraf Form'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="photoForm" [formGroup]="photoForm" (ngSubmit)="addPhotoSavee()">
+					<div class="row">
+            <div class="col col-md-12">
+                <input  placeholder="id" type="hidden" id="id" name="id"
+                       formControlName="id" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('id')!.hasError('id') && photoForm.get('id')!.dirty">
+                </div>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              
+                <input style="float: left;" placeholder="file" type="file" id="file" name="file"  (change)="uploadFile($event)"
+                       formControlName="file" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('file')!.hasError('file') && photoForm.get('file')!.dirty">
+                </div>
+              
+            </div>
+          </div>
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon = "error" [showCancelButton]="true"
+	[confirmButtonText] = "'OK'"[cancelButtonText] = "'Cancel'" >
+</swal>
+
+
+
+<!-- ROTA GALERİ EKLEME  -->
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title ">{{'RotaGaleriList'| translate}}</h4>
+      <a *ngIf="checkClaim('CreateRotaGaleriCommand')" class="pull-right" data-toggle="modal" data-target="#rotagaleri"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
+    </div>
+  </div>
+</div>
+<div class="modal modal-angular fade" id="rotagaleri" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(rotaGaleriAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'RotaGaleriForm'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="rotaGaleriAddForm" [formGroup]="rotaGaleriAddForm" (ngSubmit)="savee()">
+          <!-- <select class="browser-default custom-select" formControlName="rotaId">
+            <option value="">Seçiniz</option>
+            <option *ngFor="let item of rotaList" [value]="item.rotaId"> {{item.baslik}}</option>
+          </select> -->
+          <input type="hidden" formControlName="rotaId" [value]="rota.rotaId">
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="foto" type="text" id="foto" name="foto"
+                       formControlName="foto" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaGaleriAddForm.get('foto')!.hasError('foto') && rotaGaleriAddForm.get('foto')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="baslik" type="text" id="baslik" name="baslik"
+                       formControlName="baslik" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaGaleriAddForm.get('baslik')!.hasError('baslik') && rotaGaleriAddForm.get('baslik')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="aciklama" type="text" id="aciklama" name="aciklama"
+                       formControlName="aciklama" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaGaleriAddForm.get('aciklama')!.hasError('aciklama') && rotaGaleriAddForm.get('aciklama')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="yayin" type="text" id="yayin" name="yayin"
+                       formControlName="yayin" />
+                <div class="alert alert-danger"
+                     *ngIf="rotaGaleriAddForm.get('yayin')!.hasError('yayin') && rotaGaleriAddForm.get('yayin')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <select class="browser-default custom-select" formControlName="resimTipiId">
+            <option value="">Seçiniz</option>
+            <option *ngFor="let item of resimTipiList" [value]="item.resimTipiId"> {{item.adi}}</option>
+          </select>
+
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- RESİMLER -->
+<div class="row">
+  <div style="margin-bottom: 30px;" class="col" *ngFor="let rotaGaleri of rotaGaleris">
+    <div class="card" style="width: calc(100% - 60px); margin: 0 auto; height: 580px;">
+      <div class="card-body">
+        <h5 class="card-title">id: {{ rotaGaleri.rotaGaleriId }}</h5>
+        <h5 class="card-title">{{ rotaGaleri.baslik }}</h5>
+        <div class="image-wrapper">
+          <img style="height: 312px; width: 270px;" src="{{ baseUrl }}{{ rotaGaleri.foto }}">
+        </div>
+        <p class="card-text scrollable">{{ rotaGaleri.aciklama }}</p>
+      </div>
+      <div class="button-group">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#rotagaleriedit" (click)="openModal(rotaGaleri)">Güncelle</button>
+        <button class="btn btn-danger" (click)="deleteResim(rotaGaleri)">Sil</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photoModall" (click)="upFile(rotaGaleri.rotaGaleriId)">Resim</button>
+        <!-- <button type="button" class="btn btn-primary" (click)="consoleLog(rotaGaleri.rotaGaleriId)">Konsola Yazdır</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rota Galeri Güncelleme MODAL -->
+<div class="modal fade" id="rotagaleriedit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Güncelle</h4>
+        <form [formGroup]="updateForm" (ngSubmit)="updateRotaGaleri()">
+          <!-- Güncelleme formu alanları -->
+          <input class="form-control" type="hidden" formControlName="rotaGaleriId" placeholder="rotaGaleriId">
+          <input class="form-control" type="number" formControlName="rotaId" placeholder="rotaId" [value]="rotaGaleri.rotaId">
+          <input class="form-control" type="text" formControlName="foto" placeholder="foto" [value]="rotaGaleri.foto">
+          <input class="form-control" type="text" formControlName="baslik" placeholder="baslik" [value]="rotaGaleri.baslik">
+          <input class="form-control" type="text" formControlName="aciklama" placeholder="Açıklama" [value]="rotaGaleri.aciklama">
+          <input class="form-control" type="number" formControlName="yayin" placeholder="yayin" [value]="rotaGaleri.yayin">
+          <select class="browser-default custom-select" formControlName="resimTipiId">
+            <option value="">Seçiniz</option>
+            <option *ngFor="let item of resimTipiList" [value]="item.resimTipiId"> {{item.adi}}</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Güncelle</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Foto Image Guncelleme -->
+<div class="modal modal-angular fade" id="photoModall" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(photoForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'Foto Edit Form'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="photoForm" [formGroup]="photoForm" (ngSubmit)="addPhotoSave()">			
+                <input  class="form-control" placeholder="id" type="hidden" id="id" name="id"
+                 formControlName="id" />            
+					<div class="row">
+            <div style="margin-top: 20px;" class="col col-md-12">
+                <input style="float: left;" placeholder="file" type="file" id="file" name="file"  (change)="uploadFile($event)"
+                       formControlName="file" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('file')!.hasError('file') && photoForm.get('file')!.dirty">
+                </div>
+            </div>
+          </div>  
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 
+
+ülke  diyom kart geliyor sonra bölgeler geliyor sonra rota 
+rota getiriyoruz
+tur detayı girince kapak başlık açıklama bi köşeye resimleri galeri gibi getirecez  -->

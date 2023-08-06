@@ -1,0 +1,8 @@
+.scrollable {
+    max-height: 100px; /* Scroll alanının maksimum yüksekliği */
+    overflow-y: auto; /* Yalnızca dikey yönde scroll özelliği (gerekirse) */
+  }
+.button-group {
+  display: flex;
+  justify-content: space-evenly;
+}

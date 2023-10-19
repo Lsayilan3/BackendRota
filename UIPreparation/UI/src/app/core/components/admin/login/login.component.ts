@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LookUp } from 'app/core/models/lookUp';
-import { LocalStorageService } from 'app/core/services/local-storage.service';
+import { LocalStorageService } from '../../../services/local-storage.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { environment } from 'environments/environment';
 import { LoginUser } from './model/login-user';

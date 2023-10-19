@@ -1,11 +1,14 @@
-<div class="card" style="width: calc(100% - 60px); margin: 0 auto;">
-  <h2 style="margin-left: 20px; margin-top: 10px; margin-bottom: 0px;" class="card-title">{{ rota.baslik }}</h2>
+<div class="" style="width: calc(100% - 25px); margin: 0 auto;">
+  <div class="container-fluid">
+<div class="card" style="margin: 0 auto;">
+  <h2 style="margin-left: 20px; margin-top: 10px; margin-bottom: 0px; font-weight: bold;" class="card-title">{{ rota.baslik }}</h2>
   <div class="card-body" style="display: flex; align-items: center;">
-    <img style="height: 270px; width: 270px; margin-right: 10px;" src="{{baseUrl}}{{ rota.foto }}">
+    <img style="max-height: 312px; max-width: 346px; margin-right: 10px;" src="{{ baseUrl }}{{ rota.foto }}">
     <p class="card-text">{{ rota.aciklama }}</p>
   </div>
 </div>
-
+</div>
+</div>
 
 <div class="" style="width: calc(100% - 25px); margin: 0 auto;">
   <div class="container-fluid">
@@ -51,7 +54,7 @@
 	
                    <ng-container matColumnDef="aciklama">
                      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Aciklama'|translate}}</th>
-                     <td mat-cell *matCellDef="let element">{{element.aciklama}}</td>
+                     <td mat-cell *matCellDef="let element">{{element.aciklama | slice:0:200}}</td>
 				   </ng-container>
 	
                    <ng-container matColumnDef="yayin">
@@ -84,7 +87,7 @@
             <td style="width: 25px;" mat-cell
               *matCellDef="let element">
               <a *ngIf="checkClaim('UpdateRotaDetayiCommand')" data-toggle="modal" data-target="#photoModal"  (click)="upFile(element.rotaDetayiId)">
-                <i title="{{'File'| translate}}" style="color:#ff5722;" class="far fa-documents"></i>
+                <i title="{{'Image'| translate}}" style="color:#ff5722;" class="far fa-images"></i>
               </a>
             </td>
           </ng-container>
@@ -214,8 +217,6 @@
 </div>
 
 
-<angular-editor [placeholder]="'Enter text...'" [(ngModel)]="editorContent"></angular-editor>
-
 
 <!-- FOTOĞRAF MODAL -->
 
@@ -260,13 +261,10 @@
 </div>
 
 
-<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon = "error" [showCancelButton]="true"
-	[confirmButtonText] = "'OK'"[cancelButtonText] = "'Cancel'" >
-</swal>
-
-
-
 <!-- ROTA GALERİ EKLEME  -->
+<div class="" style="width: calc(100% - 25px); margin: 0 auto;">
+  <div class="container-fluid">
+    <div class="row">
 <div class="col-md-12">
   <div class="card">
     <div class="card-header card-header-danger">
@@ -347,36 +345,58 @@
     </div>
   </div>
 </div>
+</div>
+</div>
+</div>
 
 
 <!-- RESİMLER -->
-<div class="row">
-  <div style="margin-bottom: 30px;" class="col" *ngFor="let rotaGaleri of rotaGaleris">
-    <div class="card" style="width: calc(100% - 60px); margin: 0 auto; height: 580px;">
+<div class="" style="width: calc(100% - 25px); margin: 0 auto;">
+<div class="container-fluid">
+  <div class="row">
+  <div style="margin-bottom: 30px;" class="col col-xl-3 col-lg-5 col-md-6 col-sm-12" *ngFor="let rotaGaleri of rotaGaleris">
+    <div class="card" style="width: calc(100% - 60px); margin: 0 auto;   height: 100%; width: 100%;">
       <div class="card-body">
-        <h5 class="card-title">id: {{ rotaGaleri.rotaGaleriId }}</h5>
-        <h5 class="card-title">{{ rotaGaleri.baslik }}</h5>
-        <div class="image-wrapper">
-          <img style="height: 312px; width: 270px;" src="{{ baseUrl }}{{ rotaGaleri.foto }}">
+        <h5 style="font-weight: bold; text-align: center;" class="card-title">{{ rotaGaleri.baslik }}</h5>
+        <div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: 56.25%; position: relative;">
+          <img style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" src="{{ baseUrl }}{{ rotaGaleri.foto }}">
         </div>
-        <p class="card-text scrollable">{{ rotaGaleri.aciklama }}</p>
+        <p style="margin-top: 10px;" class="card-text scrollable">{{ rotaGaleri.aciklama }}</p>
       </div>
       <div class="button-group">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#rotagaleriedit" (click)="openModal(rotaGaleri)">Güncelle</button>
-        <button class="btn btn-danger" (click)="deleteResim(rotaGaleri)">Sil</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photoModall" (click)="upFile(rotaGaleri.rotaGaleriId)">Resim</button>
-        <!-- <button type="button" class="btn btn-primary" (click)="consoleLog(rotaGaleri.rotaGaleriId)">Konsola Yazdır</button> -->
+        <button style="background-color: #e94340;" class="btn" data-toggle="modal" data-target="#rotagaleridit" (click)="openModal(rotaGaleri)">
+          <i id="iconbir" class="fa fa-edit"></i><span class="button-text"> Güncelle</span>
+        </button>
+        <button style="background-color: #e94340;" class="btn" (click)="deleteResim(rotaGaleri)">
+          <i id="iconbir" class="fa fa-trash"></i><span class="button-text"> Sil</span>
+        </button>
+        <button style="background-color: #e94340;" type="button" class="btn" data-toggle="modal" data-target="#photoModall" (click)="upFile(rotaGaleri.rotaGaleriId)">
+          <i id="iconbir" class="fa fa-image"></i><span class="button-text"> Resim</span>
+        </button>
       </div>
     </div>
   </div>
 </div>
+</div>
+</div>
+
+
+
+
+
+
 
 <!-- Rota Galeri Güncelleme MODAL -->
 <div class="modal fade" id="rotagaleriedit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <h4 class="modal-title">Güncelle</h4>
+        <div class="modal-header">
+          <h4 class="modal-title text-center">Güncelle</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" style="position: absolute; top: 10px; right: 10px; font-size: 24px;">&times;</span>
+          </button>
+        </div>
         <form [formGroup]="updateForm" (ngSubmit)="updateRotaGaleri()">
           <!-- Güncelleme formu alanları -->
           <input class="form-control" type="hidden" formControlName="rotaGaleriId" placeholder="rotaGaleriId">

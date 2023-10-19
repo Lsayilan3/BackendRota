@@ -37,7 +37,7 @@
 	
                    <ng-container matColumnDef="aciklama">
                      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Aciklama'|translate}}</th>
-                     <td mat-cell *matCellDef="let element">{{element.aciklama}}</td>
+                     <td mat-cell *matCellDef="let element">{{element.aciklama | slice:0:200}}</td>
 				   </ng-container>
 
 

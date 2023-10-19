@@ -1,3 +1,4 @@
+import { LocalStorageService } from 'app/core/services/local-storage.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +13,7 @@ import { ComponentsModule } from './core/modules/components.module';
 import { AdminLayoutComponent } from './core/components/app/layouts/admin-layout/admin-layout.component';
 import { AlertifyService } from './core/services/alertify.service';
 import { AuthService } from './core/components/admin/login/services/auth.service';
-import { LocalStorageService } from './core/services/local-storage.service';
+
 import { LoginGuard } from './core/guards/login-guard';
 import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

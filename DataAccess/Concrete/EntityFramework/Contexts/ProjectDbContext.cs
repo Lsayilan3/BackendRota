@@ -62,6 +62,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Team> Teams { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Partner> Partners { get; set; }
+        public DbSet<MediaFoto> MediaFotoes { get; set; }
 
    
  

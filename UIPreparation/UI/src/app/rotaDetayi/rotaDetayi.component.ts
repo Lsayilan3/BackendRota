@@ -8,8 +8,6 @@ import { AlertifyService } from 'app/core/services/alertify.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { AuthService } from 'app/core/components/admin/login/services/auth.service';
 
-
-import { environment } from 'environments/environment';
 import { Sehir } from 'app/sehir/models/Sehir';
 import { Kategori } from 'app/kategori/models/Kategori';
 import { KategoriService } from 'app/kategori/services/Kategori.service';
@@ -18,6 +16,8 @@ import { Rota } from 'app/rota/models/Rota';
 import { RotaService } from 'app/rota/services/Rota.service';
 import { Router } from '@angular/router';
 import { RotaDetayiService } from './services/rotadetayi.service';
+
+
 
 
 declare var jQuery: any;
@@ -45,7 +45,6 @@ export class RotaDetayiComponent implements AfterViewInit, OnInit {
 	sehirList:Sehir[];
 	kategoriList:Kategori[];
 	rotaDetayiId:number;
-	
 
 	constructor( private router: Router,private rotaService:RotaService, private kategoriService:KategoriService, private sehirService:SehirService, private rotaDetayiService:RotaDetayiService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
 

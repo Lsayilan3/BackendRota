@@ -87,7 +87,7 @@
 	
                    <ng-container matColumnDef="harita">
                      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Harita'|translate}}</th>
-                     <td mat-cell *matCellDef="let element">{{element.harita}}</td>
+                     <td mat-cell *matCellDef="let element">{{element.harita | slice:0:80}}</td>
 				   </ng-container>
 
 

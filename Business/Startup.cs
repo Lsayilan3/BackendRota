@@ -18,6 +18,7 @@ using DataAccess.Concrete.MongoDb.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -90,6 +91,7 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMediaFotoRepository, MediaFotoRepository>();
             services.AddTransient<IPartnerRepository, PartnerRepository>();
             services.AddTransient<ISliderRepository, SliderRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
@@ -130,6 +132,7 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMediaFotoRepository, MediaFotoRepository>();
             services.AddTransient<IPartnerRepository, PartnerRepository>();
             services.AddTransient<ISliderRepository, SliderRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
@@ -168,6 +171,7 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMediaFotoRepository, MediaFotoRepository>();
             services.AddTransient<IPartnerRepository, PartnerRepository>();
             services.AddTransient<ISliderRepository, SliderRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();

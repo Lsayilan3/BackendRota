@@ -55,7 +55,7 @@
             <td style="width: 25px;" mat-cell
               *matCellDef="let element">
               <a *ngIf="checkClaim('UpdateKategoriCommand')" data-toggle="modal" data-target="#photoModal"  (click)="upFile(element.kategoriId)">
-                <i title="{{'File'| translate}}" style="color:#ff5722;" class="far fa-documents"></i>
+                <i title="{{'Image'| translate}}" style="color:#ff5722;" class="far fa-images"></i>
               </a>
             </td>
           </ng-container>
@@ -180,7 +180,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
           (click)="clearFormGroup(photoForm)"><span aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-           {{'BlogForm'| translate}}
+           {{'KatagoriForm'| translate}}
         </h4>
         <div class="separator"></div>
         <form *ngIf="photoForm" [formGroup]="photoForm" (ngSubmit)="addPhotoSave()">

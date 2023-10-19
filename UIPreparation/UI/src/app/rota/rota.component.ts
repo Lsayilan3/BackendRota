@@ -28,7 +28,7 @@ export class RotaComponent implements AfterViewInit, OnInit {
   dataSource: MatTableDataSource<Rota>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['rotaId','baslik','ozet','aciklama','yayin','sira','foto','kategoriId','sehirId','anaRotaId', 'update','delete','search','file'];
+  displayedColumns: string[] = ['rotaId','baslik','ozet','aciklama','yayin','sira','foto','kategoriId','sehirId','anaRotaId', 'update','delete', 'search','file'];
 
   rotaList: Rota[];
   rota: Rota = new Rota();

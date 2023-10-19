@@ -35,6 +35,7 @@ export class SliderService {
   deleteSlider(id: number) {
     return this.httpClient.request('delete', environment.getApiUrl + '/sliders/', { body: { sliderId: id } });
   }
+  
   addFile(formData:FormData): Observable<any>{
     return this.httpClient.post(environment.getApiUrl + '/sliders/addPhoto', formData, { responseType: 'text' });
   }

@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RotaDetayiService } from './../rotaDetayi/services/rotadetayi.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,6 +20,8 @@ import { environment } from 'environments/environment';
 import { RotaGaleriService } from 'app/rotaGaleri/services/RotaGaleri.service';
 import { ResimTipi } from 'app/resimTipi/models/ResimTipi';
 import { ResimTipiService } from 'app/resimTipi/services/ResimTipi.service';
+
+
 
 
 
@@ -47,6 +49,7 @@ export class RotaPagesComponent implements OnInit {
 	rotaDetayi:RotaDetayi=new RotaDetayi();
 
   baseUrl :string=environment.getApiUrlPhoto;
+  
   rotaGaleriList: RotaGaleri[] = []; // veya başlangıç verisiyle doldurulmuş bir dizi
 
 
@@ -71,7 +74,9 @@ export class RotaPagesComponent implements OnInit {
   resimTipiList:ResimTipi[];
 	resimTipi:ResimTipi=new ResimTipi();
 
-  
+  editorContent: string = '';
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -488,7 +493,5 @@ updateRotaGaleri(): void {
     }
   );
 }
-
-
 
 }
